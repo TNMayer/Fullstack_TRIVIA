@@ -29,6 +29,7 @@ dependencies:
   - pip:
     - aniso8601==6.0.0
     - click==7.0
+    - colorama==0.4.4
     - flask==1.0.3
     - itsdangerous==1.1.0
     - jinja2==2.10.1
