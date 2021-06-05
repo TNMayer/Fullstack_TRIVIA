@@ -35,3 +35,12 @@ def error_405(app):
             "error": 405,
             "message": "method not allowed"
         }), 405
+
+def error_500(app):
+    @app.errorhandler(500)
+    def server_error_500(error):
+        return jsonify({
+            "success": False, 
+            "error": 500,
+            "message": "Internal Server Error"
+        }), 500

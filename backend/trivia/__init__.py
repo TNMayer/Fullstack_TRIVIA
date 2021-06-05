@@ -5,7 +5,7 @@ from flask_cors import CORS
 import random
 
 from trivia.models import setup_db, Question, Category, db
-from trivia.errors import error_404, error_422, error_400, error_405
+from trivia.errors import error_404, error_422, error_400, error_405, error_500
 
 QUESTIONS_PER_PAGE = 10
 
@@ -186,7 +186,7 @@ def create_app(test_config=None):
                 print(new_question)
                 if ((new_question is None) or (new_answer is None) or\
                     (new_question == '') or (new_answer == '')):
-                    abort(422)
+                    abort(404)
                 
                 question = Question(question=new_question, answer=new_answer, category=new_category, difficulty=new_difficulty)
                 question.insert()
@@ -254,6 +254,7 @@ def create_app(test_config=None):
     @app.route('/quizzes', methods=['POST'])
     def get_next_question():
         body = request.get_json()
+        print(body)
         cat_id = body.get('quiz_category', None)['id']
         previous_questions = body.get('previous_questions', None)
         
@@ -291,5 +292,6 @@ def create_app(test_config=None):
     error_422(app)
     error_400(app)
     error_405(app)
+    error_500(app)
   
     return app

@@ -93,7 +93,7 @@ GET '/questions?page=${integer}'
             'category': 2
         },
     ],
-    'totalQuestions': 100,
+    'total_questions': 100,
     'categories': { '1' : "Science",
     '2' : "Art",
     '3' : "Geography",
@@ -119,7 +119,7 @@ GET '/categories/${id}/questions'
             'category': 4
         },
     ],
-    'totalQuestions': 100,
+    'total_questions': 100,
     'currentCategory': 'History'
 }
 ```
@@ -180,7 +180,7 @@ POST '/questions'
             'category': 5
         },
     ],
-    'totalQuestions': 100,
+    'total_questions': 100,
     'currentCategory': 'Entertainment'
 }
 ```
