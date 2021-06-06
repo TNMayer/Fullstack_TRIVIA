@@ -40,12 +40,20 @@ flask run --reload
 
 The `--reload` flag will detect file changes and restart the server automatically.
 
+## Get the Flask Endpoint Running
+To run the Flask API, execute in your Bash/Command Prompt in the `./backend` directory:
+
+```bash
+set/export FLASK_APP=trivia
+set/export FLASK_ENV=development
+flask run
+```
+
 ## ToDo Tasks
 These are the files you'd want to edit in the backend:
 
-1. *./backend/flaskr/`__init__.py`*
-2. *./backend/test_flaskr.py*
-
+1. *./backend/trivia/`__init__.py`*
+2. *./backend/test_trivia.py*
 
 One note before you delve into your tasks: for each endpoint, you are expected to define the endpoint and response data. The frontend will be a plentiful resource because it is set up to expect certain endpoints and response data formats already. You should feel free to specify endpoints in your own way; if you do so, make sure to update the frontend or you will get some unexpected behavior. 
 
@@ -75,31 +83,6 @@ One note before you delve into your tasks: for each endpoint, you are expected t
 
 9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
 
-
-
-## Review Comment to the Students
-```
-This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
-
-Endpoints
-GET '/api/v1.0/categories'
-GET ...
-POST ...
-DELETE ...
-
-GET '/api/v1.0/categories'
-- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
-- Request Arguments: None
-- Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
-{'1' : "Science",
-'2' : "Art",
-'3' : "Geography",
-'4' : "History",
-'5' : "Entertainment",
-'6' : "Sports"}
-
-```
-
 ## Testing
 To run the tests, run
 ```
@@ -124,5 +107,142 @@ python test_flaskr.py
     '4' : "History",
     '5' : "Entertainment",
     '6' : "Sports"
+}
+```
+
+**GET '/questions?page=${integer}'**
+- Fetches a paginated set of questions, a total number of questions, all categories and current category string. 
+- Request Arguments: page - integer
+- Returns: An object with 10 paginated questions, total questions, object including all categories, and current category string
+
+```
+{
+    'questions': [
+        {
+            'id': 1,
+            'question': 'This is a question',
+            'answer': 'This is an answer', 
+            'difficulty': 5,
+            'category': 2
+        },
+    ],
+    'total_questions': 100,
+    'categories': { '1' : "Science",
+    '2' : "Art",
+    '3' : "Geography",
+    '4' : "History",
+    '5' : "Entertainment",
+    '6' : "Sports" },
+    'currentCategory': 'History'
+}
+```
+
+**GET '/categories/${id}/questions'**
+- Fetches questions for a cateogry specified by id request argument 
+- Request Arguments: id - integer
+- Returns: An object with questions for the specified category, total questions, and current category string
+
+```
+{
+    'questions': [
+        {
+            'id': 1,
+            'question': 'This is a question',
+            'answer': 'This is an answer', 
+            'difficulty': 5,
+            'category': 4
+        },
+    ],
+    'total_questions': 100,
+    'currentCategory': 'History'
+}
+```
+
+**DELETE '/questions/${id}'**
+- Deletes a specified question using the id of the question
+- Request Arguments: id - integer
+- Returns: Returns the success status and the id of the deleted question
+
+```
+{
+    'success': True,
+    'deleted': question_id
+}
+```
+
+**POST '/quizzes'**
+- Sends a post request in order to get the next question 
+- Request Body:
+```
+{
+    'previous_questions':  an array of question id's such as [1, 4, 20, 15]
+    'quiz_category': a string of the current category 
+}
+```
+- Returns: a single new question object
+```
+{
+    'question': {
+        'id': 1,
+        'question': 'This is a question',
+        'answer': 'This is an answer', 
+        'difficulty': 5,
+        'category': 4
+    }
+}
+```
+
+**POST '/questions'**
+- Sends a post request in order to search for a specific question by search term 
+- Request Body: 
+```
+{
+    'searchTerm': 'this is the term the user is looking for'
+}
+```
+- Returns: any array of questions, a number of totalQuestions that met the search term and the current category string
+```
+{
+    'questions': [
+        {
+            'id': 1,
+            'question': 'This is a question',
+            'answer': 'This is an answer', 
+            'difficulty': 5,
+            'category': 5
+        },
+    ],
+    'total_questions': 100,
+    'current_category': None
+}
+```
+
+**POST '/questions'**
+- Sends a post request in order to add a new question
+- Request Body:
+```
+{
+    'question':  'Heres a new question string',
+    'answer':  'Heres a new answer string',
+    'difficulty': 1,
+    'category': 3
+}
+```
+- Returns:
+```
+{
+    'success': True,
+    'created': 98,
+    'question_created': 'Heres a new question string',
+    'questions': [
+        {
+            'id': 1,
+            'question': 'This is a question',
+            'answer': 'This is an answer', 
+            'difficulty': 5,
+            'category': 2
+        },
+    ],
+    'total_questions': 250
 }
 ```

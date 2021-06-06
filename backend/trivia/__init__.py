@@ -179,7 +179,8 @@ def create_app(test_config=None):
                 return jsonify({
                     'success': True,
                     'questions': current_questions,
-                    'total_questions': len(selection.all())
+                    'total_questions': len(selection.all()),
+                    'current_category': None
                 })
             # insert a question to the database
             else:
